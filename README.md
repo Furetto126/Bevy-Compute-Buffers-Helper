@@ -4,42 +4,50 @@ A simple helper crate for managing buffers for a compute shader
 # Usage
 
 ```rust
-use bevy::prelude::*;
-use bevy::render::{RenderApp, Render};
+use bevy::{
+    prelude::*,
+    window::WindowPlugin, render::{RenderApp, Render},
+};
 
 use bevy_compute_buffers_helper::buffers_interface::*;
 
-#[test]
-fn test() {
+fn main() {
     let mut app = App::new();
-    app.add_plugins((DefaultPlugins, ComputeBuffersPlugin));
-
-    app.sub_app_mut(RenderApp)
-        // By initializing the buffers here in build() you make sure they exist before
-        // starting to use them in any way
-        .init_resource::<ComputeBuffers>()
-        .add_event::<ComputeBufferUpdateEvent>()
-        // Add systems that modify the buffers here
-        // ----------------------------------------
+    app.insert_resource(ClearColor(Color::BLACK))
+        .add_plugins((
+            DefaultPlugins.set(WindowPlugin {
+                primary_window: Some(Window {
+                    // uncomment for unthrottled FPS
+                    // present_mode: bevy::window::PresentMode::AutoNoVsync,
+                    ..default()
+                }),
+                ..default()
+            }), 
+            ComputeBuffersPlugin
+        ));
+    let render_app = app.sub_app_mut(RenderApp);
+    render_app.add_event::<ComputeBufferUpdateEvent>()
         .add_systems(Render, modify_buffers);
+    init_buffers(&mut render_app.world);
 
     app.run();
 }
 
 fn modify_buffers(
-    mut commands: Commands,
+    commands: Commands,
     mut compute_buffers: ResMut<ComputeBuffers>
 ) {
-    compute_buffers.set_value_at(1, vec![100.0, 69.0], commands);
+    compute_buffers.set_value_at(1, vec![1.0 as f32, 0.0, 1.0], commands);
 }
 
-impl FromWorld for ComputeBuffers {
-    // Basically an init function for the ComputeBuffers Resource
-    fn from_world(world: &mut World) -> Self {
-        world.insert_resource(ShaderPath("shaders/shader.wgsl"));
+fn init_buffers(world: &mut World) {
+    world.insert_resource(ShaderPath("shaders/shader.wgsl"));
+
+    let compute_buffers = 
         ComputeBuffers::new(vec![
-            ComputeBuffer::new(1, vec![0.0, 1.0, 2.0, 3.0])
-        ], world)
-    }
+            ComputeBuffer::new(1, vec![0.0 as f32, 1.0, 0.5])
+        ], world);
+
+    world.insert_resource(compute_buffers);
 }
 ```
