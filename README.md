@@ -7,7 +7,7 @@ A simple helper crate for managing buffers for a compute shader
 use bevy::prelude::*;
 use bevy::render::{RenderApp, Render};
 
-use crate::buffers_interface::ComputeBuffersPlugin;
+use bevy_compute_buffers_helper::buffers_interface::ComputeBuffersPlugin;
 
 #[test]
 fn test() {
