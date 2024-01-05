@@ -1,0 +1,18 @@
+[package]
+name = "bevy_compute_buffers_helper"
+description = "A simple helper crate to load buffers to a compute shader in Bevy"
+license = "MIT"
+version = "0.1.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy = "0.11"
+rand = "0.8.5"
+futures-lite = "1.13.0"
+bytemuck = "1.13.1"
+noise = "0.8.2"
+bevy_hanabi = "0.7"
+image = "0.24.7"
+lazy_static = "1.4.0"
