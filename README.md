@@ -36,7 +36,7 @@ fn modify_buffers(
 impl FromWorld for ComputeBuffers {
     // Basically an init function for the ComputeBuffers Resource
     fn from_world(world: &mut World) -> Self {
-        world.insert_resource(ShaderPath("shaders/raytracer.wgsl"));
+        world.insert_resource(ShaderPath("shaders/shader.wgsl"));
         ComputeBuffers::new(vec![
             ComputeBuffer::new(1, vec![0.0, 1.0, 2.0, 3.0])
         ], world)
