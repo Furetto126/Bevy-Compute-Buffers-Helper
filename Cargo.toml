@@ -1,8 +1,11 @@
 [package]
 name = "bevy_compute_buffers_helper"
 description = "A simple helper crate to load buffers to a compute shader in Bevy"
+authtors = ["Furetto126"]
+repository = "https://github.com/Furetto126/Bevy-Compute-Buffers-Helper"
+keywords = ["bevy", "shader", "compute", "buffer"]
 license = "MIT"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
